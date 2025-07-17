@@ -13,7 +13,7 @@ This app provides real-time translation subtitles in VR environments on Meta Que
 
 ## 📦 Architecture
 ```
-[Microphone Input] → [Python Backend: STT + Translation + WebSocket] → [Unity Overlay Client]
+[speaker output] → [Python Backend: STT + Translation + WebSocket] → [Unity Overlay Client]
 ```
 
 ## 🖥️ For PCVR (Development Mode)
