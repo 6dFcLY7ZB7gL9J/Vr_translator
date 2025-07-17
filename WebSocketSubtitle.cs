@@ -1,16 +1,35 @@
+
 using UnityEngine;
 using TMPro;
-using WebSocketSharp;
+using NativeWebSocket;
 
-public class WebSocketSubtitle : MonoBehaviour {
+public class WebSocketSubtitle : MonoBehaviour
+{
     public TextMeshProUGUI subtitleText;
-    WebSocket ws;
+    WebSocket websocket;
 
-    void Start() {
-        ws = new WebSocket("ws://localhost:6789/");
-        ws.OnMessage += (s, e) => subtitleText.text = e.Data;
-        ws.Connect();
+    async void Start()
+    {
+        websocket = new WebSocket("ws://localhost:8765");
+
+        websocket.OnMessage += (bytes) =>
+        {
+            string message = System.Text.Encoding.UTF8.GetString(bytes);
+            subtitleText.text = message;
+        };
+
+        await websocket.Connect();
     }
 
-    void OnDestroy() => ws.Close();
+    private void Update()
+    {
+#if !UNITY_WEBGL || UNITY_EDITOR
+        websocket?.DispatchMessageQueue();
+#endif
+    }
+
+    private async void OnApplicationQuit()
+    {
+        await websocket.Close();
+    }
 }

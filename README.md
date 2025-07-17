@@ -1,31 +1,40 @@
-# VR Translator Demo
 
-## Overview
-A prototype showing real-time subtitle translation overlay in VR.
+# VR Translator Overlay App
 
-## Structure
-- **unity/**: Unity 2022/2023 project with OpenXR setup and subtitle overlay
-- **python_server/**: Whisper-based STT server with language detection and WebSocket output
+## 🎯 Purpose
+This app provides real-time translation subtitles in VR environments on Meta Quest. It is designed to work in the background and can function via PCVR (using Quest Link) or natively on Quest headsets.
 
-## Getting Started
+## 🚀 Key Features
+- Translates any spoken language into the user’s native language
+- Subtitle overlay visible inside any VR app
+- Works via PCVR or directly on Quest (planned)
+- Background mode support (if enabled)
+- Triggered by specific languages or auto-activated on foreign language detection
 
-### 1. Unity (Subtitle App)
-- Open Unity Hub → Add project's `unity/` folder
-- Ensure XR Plugin Management + OpenXR installed
-- Add scene “MainScene.unity”
-
-### 2. Python Server
+## 📦 Architecture
 ```
-cd python_server
-pip install whisper sounddevice flask websockets langdetect
-python transcriber_server.py
+[Microphone Input] → [Python Backend: STT + Translation + WebSocket] → [Unity Overlay Client]
 ```
 
-### 3. Running the Demo
-- Run `transcriber_server.py`
-- In Unity, press Play — launch PCVR app via Quest Link
-- Speak in a non-native language and watch subtitles appear in VR
+## 🖥️ For PCVR (Development Mode)
+1. Clone this repo
+2. Open Unity project in `/UnityClient`
+3. Run `server.py` from `/PythonServer` (requires Whisper + WebSocket + LangDetect)
+4. Launch any PCVR game through Quest Link
+5. Overlay will appear as translated subtitles
 
-## How to Use
-- Modify `language_preference` in `transcriber_server.py`
-- Adjust UI or WebSocket endpoint in Unity script
+## 🔐 Privacy Notes
+- No voice data is stored
+- Player audio is anonymized (Player 1, Player 2, etc.)
+- Optional cloud hosting planned for Meta environment
+
+## 🛠️ Future Roadmap
+- Native Quest integration with headset mic access
+- Secure cloud deployment with Meta Hosting (if approved)
+- More language options, speaker labeling, and voice audio playback
+
+## 🤝 Contributions
+Check `/CONTRIBUTING.md` and `/docs/roadmap.md` for how to get involved.
+
+---
+This app is developed by [Rachel French](mailto:Rachelspado@gmail.com)
